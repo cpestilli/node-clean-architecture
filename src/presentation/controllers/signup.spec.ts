@@ -29,6 +29,14 @@ const makeEmailValidatorWithError = (): EmailValidator => {
 
 //factory
 const makeSut = (): SutTypes => {
+  /* Removido stub para uma factory */
+  // class EmailValidatorStub implements EmailValidator {
+  //   isValid(email: string): boolean {
+  //     return true;
+  //   }
+  // }
+  // const emailValidatorStub = new EmailValidatorStub();
+
   const emailValidatorStub = makeEmailValidator();
   const sut = new SignUpController(emailValidatorStub);
   return {

@@ -126,6 +126,25 @@ describe("SignUp Controller", () => {
     expect(httpResponse.body).toEqual(new InvalidParamError("email"));
   });
 
+  test("Should return 400 if no password confirmation is provided", () => {
+    //system under test
+    const { sut } = makeSut();
+
+    const httpRequest = {
+      body: {
+        name: "name",
+        email: "email@mail.com",
+        password: "password",
+        passwordConfirmation: "password_invalid",
+      },
+    };
+    const httpResponse = sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(
+      new InvalidParamError("passwordConfirmation")
+    );
+  });
+
   test("Should call email validator with correct email", () => {
     //system under test
     const { sut, emailValidatorStub } = makeSut();
@@ -143,11 +162,31 @@ describe("SignUp Controller", () => {
     expect(isValidSpy).toHaveBeenCalledWith("email@email.com");
   });
 
-  test("Should return 500 if emailValidator throws", () => {
+  test("Should return 500 if emailValidator throws (using factory to instance it stub)", () => {
     const emailValidatorStub = makeEmailValidatorWithError();
     const sut = new SignUpController(emailValidatorStub);
 
     jest.spyOn(emailValidatorStub, "isValid");
+
+    const httpRequest = {
+      body: {
+        name: "name",
+        email: "email@mail.com",
+        password: "password",
+        passwordConfirmation: "password",
+      },
+    };
+    const httpResponse = sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse.body).toEqual(new ServerError());
+  });
+
+  test("Should return 500 if emailValidator throws (using jest mock to mocking stub", () => {
+    const { sut, emailValidatorStub } = makeSut();
+
+    jest.spyOn(emailValidatorStub, "isValid").mockImplementationOnce(() => {
+      throw new Error();
+    });
 
     const httpRequest = {
       body: {

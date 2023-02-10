@@ -1,22 +1,29 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Build
+name: Test
 
 on:
   push:
-    branches: ["develop"]
-  pull_request:
-    branches: ["staging, master"]
+  workflow_call:
+      outputs:
+        coverage-artifacts-file-name:
+          description: "The name of the coverage artifacts file"
+          value: ${{ jobs.test.outputs.coverage-artifacts-file-name }}
 
 jobs:
-  build:
+  test:
+    name: Test
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+    env:
+      GIT_COMMIT_SHA: ${{ github.sha }}
+      GIT_BRANCH: ${{ github.ref }}
+    outputs:
+      coverage-artifacts-file-name: ${{ steps.upload-coverage-artifact.outputs.file-name }}
 
     steps:
       - uses: actions/checkout@v3
@@ -40,3 +47,15 @@ jobs:
 
       - name: Run tests
         run: npm run test -- --collectCoverage=true
+        
+      - name: Upload test coverage artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-coverage-${{ github.sha }}-files
+          path: coverage/
+          if-no-files-found: warn
+          retention-days: 1
+
+      - name: Set coverage file name
+        id: upload-coverage-artifact
+        run: echo "::set-output name=file-name::test-coverage-${{ github.sha }}-files"

@@ -5,11 +5,9 @@ name: Test
 
 on:
   push:
-  workflow_call:
-      outputs:
-        coverage-artifacts-file-name:
-          description: "The name of the coverage artifacts file"
-          value: ${{ jobs.test.outputs.coverage-artifacts-file-name }}
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
 
 jobs:
   test:
@@ -19,11 +17,11 @@ jobs:
       matrix:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    env:
-      GIT_COMMIT_SHA: ${{ github.sha }}
-      GIT_BRANCH: ${{ github.ref }}
-    outputs:
-      coverage-artifacts-file-name: ${{ steps.upload-coverage-artifact.outputs.file-name }}
+    # env:
+    #   GIT_COMMIT_SHA: ${{ github.sha }}
+    #   GIT_BRANCH: ${{ github.ref }}
+    # outputs:
+    #   coverage-artifacts-file-name: ${{ steps.upload-coverage-artifact.outputs.file-name }}
 
     steps:
       - uses: actions/checkout@v3
@@ -55,7 +53,13 @@ jobs:
           path: coverage/
           if-no-files-found: warn
           retention-days: 1
+          
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3
+        with:
+          name: code-coverage-report
+          path: output/test/code-coverage.html
 
-      - name: Set coverage file name
-        id: upload-coverage-artifact
-        run: echo "::set-output name=file-name::test-coverage-${{ github.sha }}-files"
+      # - name: Set coverage file name
+      #   id: upload-coverage-artifact
+      #   run: echo "::set-output name=file-name::test-coverage-${{ github.sha }}-files"

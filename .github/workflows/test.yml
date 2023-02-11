@@ -5,9 +5,9 @@ name: Test
 
 on:
   push:
-    branches: [ develop ]
+    branches: [develop]
   pull_request:
-    branches: [ develop ]
+    branches: [develop]
 
 jobs:
   test:
@@ -45,7 +45,7 @@ jobs:
 
       - name: Run tests
         run: npm run test -- --collectCoverage=true
-        
+
       - name: Upload test coverage artifacts
         uses: actions/upload-artifact@v3
         with:
@@ -53,7 +53,7 @@ jobs:
           path: coverage/
           if-no-files-found: warn
           retention-days: 1
-          
+
       - name: Archive code coverage results
         uses: actions/upload-artifact@v3
         with:

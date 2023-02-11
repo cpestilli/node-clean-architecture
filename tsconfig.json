@@ -1,9 +1,9 @@
 {
-    "compilerOptions": {
-        "outDir": "./dist", 
-        "module": "commonjs",
-        "target": "es2019",
-        "esModuleInterop": true, //conversão de modulos que usam require e module.export se usar import
-        "allowJs": true //permitir arquivos de configuração em js.
-    }
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "commonjs",
+    "target": "es2019",
+    "esModuleInterop": true, //conversão de modulos que usam require e module.export se usar import
+    "allowJs": true //permitir arquivos de configuração em js.
+  }
 }

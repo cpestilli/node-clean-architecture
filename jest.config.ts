@@ -28,10 +28,10 @@ export default {
   // cacheDirectory: "/tmp/jest_rs",
 
   // Automatically clear mock calls and instances between every test
-   clearMocks: true,
+  clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
-   collectCoverage: true,
+  collectCoverage: true,
 
   // An array of regexp pattern strings used to skip coverage collection
   // coveragePathIgnorePatterns: [
@@ -39,7 +39,7 @@ export default {
   // ],
 
   // A list of reporter names that Jest uses when writing coverage reports
-  coverageReporters: ["text","html"],
+  coverageReporters: ["text", "html"],
 
   // An object that configures minimum threshold enforcement for coverage results
   // coverageThreshold: {
@@ -98,7 +98,7 @@ export default {
   // notifyMode: "failure-change",
 
   // A preset that is used as a base for Jest's configuration
-  preset: 'ts-jest',
+  preset: "ts-jest",
 
   // Run tests from one or more projects
   // projects: undefined,
@@ -119,7 +119,7 @@ export default {
   // restoreMocks: false,
 
   // The root directory that Jest should scan for tests and modules within
-   rootDir: 'src',
+  rootDir: "src",
 
   // Allows you to use a custom runner instead of Jest's default test runner
   // runner: "jest-runner",

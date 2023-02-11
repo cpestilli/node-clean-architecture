@@ -17,9 +17,9 @@ jobs:
       matrix:
         node-version: [16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-    # env:
-    #   GIT_COMMIT_SHA: ${{ github.sha }}
-    #   GIT_BRANCH: ${{ github.ref }}
+    env:
+      GIT_COMMIT_SHA: ${{ github.sha }}
+      GIT_BRANCH: ${{ github.ref }}
     # outputs:
     #   coverage-artifacts-file-name: ${{ steps.upload-coverage-artifact.outputs.file-name }}
 
@@ -46,20 +46,23 @@ jobs:
       - name: Run tests
         run: npm run test -- --collectCoverage=true
 
-      - name: Upload test coverage artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-coverage-${{ github.sha }}-files
-          path: coverage/
-          if-no-files-found: warn
-          retention-days: 1
+      # - name: Upload test coverage artifacts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: test-coverage-${{ github.sha }}-files
+      #     path: coverage/
+      #     if-no-files-found: warn
+      #     retention-days: 1
 
-      - name: Archive code coverage results
-        uses: actions/upload-artifact@v3
-        with:
-          name: code-coverage-report
-          path: output/test/code-coverage.html
+      # - name: Archive code coverage results
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: code-coverage-report
+      #     path: output/test/code-coverage.html
 
       # - name: Set coverage file name
       #   id: upload-coverage-artifact
       #   run: echo "::set-output name=file-name::test-coverage-${{ github.sha }}-files"
+      
+      - name: Commit 
+        run: echo "::COMMIT-${{ github.sha }}::BRANCH-${{ github.ref }}"

@@ -7,7 +7,7 @@
     "esModuleInterop": true, //conversão de modulos que usam require e module.export se usar import
     "allowJs": true, //permitir arquivos de configuração em js.
     "paths": {
-      "@src/*": ["./src/*"],
+      "@src/*": ["./src/*"]
     }
-  },
+  }
 }

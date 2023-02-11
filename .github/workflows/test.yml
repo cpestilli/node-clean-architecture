@@ -63,6 +63,6 @@ jobs:
       # - name: Set coverage file name
       #   id: upload-coverage-artifact
       #   run: echo "::set-output name=file-name::test-coverage-${{ github.sha }}-files"
-      
-      - name: Commit 
+
+      - name: Commit
         run: echo "::COMMIT-${{ github.sha }}::BRANCH-${{ github.ref }}"

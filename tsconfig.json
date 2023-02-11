@@ -2,8 +2,9 @@
   "compilerOptions": {
     "outDir": "./dist",
     "module": "commonjs",
-    "target": "es2019",
+    "target": "es2020",
     "esModuleInterop": true, //conversão de modulos que usam require e module.export se usar import
-    "allowJs": true //permitir arquivos de configuração em js.
+    "allowJs": true, //permitir arquivos de configuração em js.
+    "types" : ["node"]
   }
 }

@@ -4,11 +4,6 @@
     "module": "commonjs",
     "target": "es2020",
     "esModuleInterop": true, //conversão de modulos que usam require e module.export se usar import
-    "allowJs": true, //permitir arquivos de configuração em js.
-  },
-  "typeRoots": [
-    "../../node_modules",
-    "../../node_modules/@types",
-    "../definitions"
-],
+    "allowJs": true //permitir arquivos de configuração em js.
+  }
 }
